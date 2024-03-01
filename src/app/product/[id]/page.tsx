@@ -113,9 +113,9 @@ const Page: NextPage<ProductPage> = ({ params: { id } }) => {
                                     +
                                 </button>
                                 <span className="border border-1 border-gray-400 px-3 py-2 rounded-lg">
-                                    {cartItem.quantity || "0"}
+                                    {cartItem?.quantity || "0"}
                                 </span>
-                                {cartItem.quantity ? (
+                                {cartItem?.quantity ? (
                                     <button onClick={reduceQuantity} className="text-2xl">
                                         -
                                     </button>

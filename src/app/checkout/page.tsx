@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import NavBar from "@/components/NavBar";
 import Cart from "@/components/Cart";
 
@@ -14,12 +14,19 @@ const Page: NextPage = () => {
         return state.user.user;
     });
 
+    const [inAppUser,setInAppUser]=useState(user);
+
+    useEffect(()=>{
+        setInAppUser(user)
+
+    },[user])
+
     return (
         <div className="">
             <NavBar />
             <div className="max-w-4xl mt-[150px] m-auto grid grid-cols-2 gap-4">
                 <Cart />
-                {user?.displayName && user?.email ? <Payment /> : <AuthUser />}
+                {inAppUser?.displayName && inAppUser?.email ? <Payment /> : <AuthUser />}
             </div>
         </div>
     );

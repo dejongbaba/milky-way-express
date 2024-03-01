@@ -73,7 +73,10 @@ function Payment(props) {
                     amount: (cart.total * 100) | 0,
                     publicKey: process.env.PAYSTACK_PUBLIC_TEST_KEY as string,
                     currency: "NGN",
-                    callback: onSuccess,
+                    onSuccess: onSuccess,
+                    onClose: ()=>{
+
+                    },
                 };
 
                 return (

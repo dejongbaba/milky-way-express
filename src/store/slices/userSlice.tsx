@@ -86,6 +86,11 @@ const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
+        GET_USER(state) {
+            if (localStorage.getItem("account")) {
+                state.user = JSON.parse(localStorage.getItem("account"))
+            }
+        },
         SIGN_IN(state, { payload }) {
             state.connected = true;
             state.connectionNote = true;
@@ -112,7 +117,6 @@ const userSlice = createSlice({
                 state.status = STATUSES.IDLE;
                 userInfos.forEach((doc) => {
                     state.userInfo = { ...doc.data(), docId: doc.id };
-
                     const localData = JSON.stringify(userInfos);
                     localStorage.setItem("account", localData);
                 });
