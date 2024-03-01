@@ -1,87 +1,103 @@
-import SectionItem from '@/components/products/SectionItem'
-import {useSelector} from 'react-redux';
-import { useEffect, useState } from 'react';
+import SectionItem from "@/components/products/SectionItem";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { fetchProducts } from "@/store/slices/itemsSlice";
+import { cartActions } from "@/store/slices/cartSlice";
 
-function ItemsSection({filterss, search}) {
+function ItemsSection({ filterss, search }) {
+    const dispatch = useDispatch();
 
-let storeItems = useSelector(state=> state.items.itemsItems)
-let [itemsToshow, setItemsToshow]=useState(storeItems)
-useEffect(()=>{
-  setItemsToshow(storeItems)
-},[storeItems])
-useEffect(()=>{
-  if(search){
-    let itemsTofilter = storeItems
+    let storeItems = useSelector((state) => {
+        return state.items.itemsItems;
+    });
 
-      itemsTofilter = itemsTofilter.filter((item)=>{
-        return item.title.toLowerCase().includes(search)
-      })
-      setItemsToshow(itemsTofilter)
+    let [itemsToshow, setItemsToshow] = useState(storeItems);
 
-  }
-},[search])
-useEffect(()=>{
+    useEffect(() => {
+        dispatch(fetchProducts());
+    }, []);
 
-  let itemsTofilter = storeItems
-  if(filterss){
+    useEffect(() => {
+        setItemsToshow(storeItems);
+    }, [storeItems]);
 
-    if(filterss.search){
-      itemsTofilter = itemsTofilter.filter((item)=>{
-        return item.title.toLowerCase().includes(filterss.search.toLowerCase())
-      })}
+    useEffect(() => {
+        if (search) {
+            let itemsTofilter = storeItems;
 
-    if(filterss.min){
-      itemsTofilter = itemsTofilter.filter((item)=>{
-        return item.price >= parseFloat(filterss.min)
-      })
-    }
-    if(filterss.max){
-      itemsTofilter = itemsTofilter.filter((item)=>{
-        return item.price <= parseFloat(filterss.max)
-      })
-    }
-    if(filterss.pl){
-      itemsTofilter = itemsTofilter.filter((item)=>{
-        return item.type == "Peace lily"
-      })
-    }
-    if(filterss.scc){
-      itemsTofilter = itemsTofilter.filter((item)=>{
-        return item.type == "Succulent"
-      })
-    }
-    if(filterss.csp){
-      itemsTofilter = itemsTofilter.filter((item)=>{
-        return item.type == 'Curly Spider Plant'
-      })
-    }
-    if(filterss.sp){
-      itemsTofilter = itemsTofilter.filter((item)=>{
-        return item.type == 'Snake plant'
-      })
-    }
-    if(filterss.rce){
-      itemsTofilter = itemsTofilter.filter((item)=>{
-        return item.type == 'Red Chinese evergreen'
-      })
-    }
+            itemsTofilter = itemsTofilter.filter((item) => {
+                return item.title.toLowerCase().includes(search);
+            });
+            setItemsToshow(itemsTofilter);
+        }
+    }, [search]);
 
+    useEffect(() => {
+        let itemsTofilter = storeItems;
+        if (filterss) {
+            if (filterss.search) {
+                itemsTofilter = itemsTofilter.filter((item) => {
+                    return item.title.toLowerCase().includes(filterss.search.toLowerCase());
+                });
+            }
 
+            if (filterss.min) {
+                itemsTofilter = itemsTofilter.filter((item) => {
+                    return item.price >= parseFloat(filterss.min);
+                });
+            }
+            if (filterss.max) {
+                itemsTofilter = itemsTofilter.filter((item) => {
+                    return item.price <= parseFloat(filterss.max);
+                });
+            }
+            if (filterss.pl) {
+                itemsTofilter = itemsTofilter.filter((item) => {
+                    return item.type == "Peace lily";
+                });
+            }
+            if (filterss.scc) {
+                itemsTofilter = itemsTofilter.filter((item) => {
+                    return item.type == "Succulent";
+                });
+            }
+            if (filterss.csp) {
+                itemsTofilter = itemsTofilter.filter((item) => {
+                    return item.type == "Curly Spider Plant";
+                });
+            }
+            if (filterss.sp) {
+                itemsTofilter = itemsTofilter.filter((item) => {
+                    return item.type == "Snake plant";
+                });
+            }
+            if (filterss.rce) {
+                itemsTofilter = itemsTofilter.filter((item) => {
+                    return item.type == "Red Chinese evergreen";
+                });
+            }
 
-    setItemsToshow(itemsTofilter)
-  }
+            setItemsToshow(itemsTofilter);
+        }
+    }, [filterss]);
 
-},[filterss])
-
-  return (
-    <div className='grid grid-col-4 gap-4'>
-
-            {itemsToshow.map((plant)=>{
-              return (<SectionItem key={plant.id} id={plant.id} title={plant.title} type={plant.type} price={plant.price} mainPic={plant.mainPic}/>)
-            }) }
-
-    </div>
-  )
+    return (
+        <div className="grid grid-cols-3 gap-4">
+            {itemsToshow.map((i) => {
+                return (
+                    <SectionItem
+                        key={i.id}
+                        id={i.id}
+                        description={i.description}
+                        title={i.title}
+                        category={i.category}
+                        price={i.price}
+                        image={i.image}
+                    />
+                );
+            })}
+        </div>
+    );
 }
 
-export default ItemsSection
+export default ItemsSection;

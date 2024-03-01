@@ -1,12 +1,6 @@
 "use client";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import {
-    signInWithEmailAndPassword,
-    signOut,
-    GoogleAuthProvider,
-    signInWithPopup,
-    createUserWithEmailAndPassword,
-} from "firebase/auth";
+import { signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { auth, db } from "@/config/firebase-config";
 import { fetchProducts, STATUSES } from "@/store/slices/itemsSlice";
@@ -24,11 +18,6 @@ export const signIn = createAsyncThunk("user/signin", async ({ email, password }
     //     // localStorage.setItem("account", localData);
     // });
     return userInfos;
-});
-export const signUp = createAsyncThunk("user/signup", async ({ email, password }) => {
-    const res = await createUserWithEmailAndPassword(auth, email, password);
-
-    return res;
 });
 // export function signIn(email, password) {
 //     return async (dispatch) => {
@@ -131,16 +120,6 @@ const userSlice = createSlice({
                 });
             })
             .addCase(signInWithGoogle.rejected, (state, action) => {
-                state.status = STATUSES.ERROR;
-            })
-            .addCase(signUp.fulfilled, (state, action) => {
-                const userInfos = action.payload;
-                state.user = userInfos.user;
-                state.status = STATUSES.IDLE;
-                const localData = JSON.stringify(userInfos);
-                localStorage.setItem("account", localData);
-            })
-            .addCase(signUp.rejected, (state, action) => {
                 state.status = STATUSES.ERROR;
             })
             .addCase(signOutGoogle.fulfilled, (state, action) => {
