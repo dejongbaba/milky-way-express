@@ -28,28 +28,28 @@ function NavBar() {
             setScrolled(false);
         }
     };
-    useEffect(() => {
-        window.addEventListener("scroll", changeBackground);
-        changeBackground();
-    });
+    // useEffect(() => {
+    //     window.addEventListener("scroll", changeBackground);
+    //     changeBackground();
+    // });
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(cartActions.GET_CART_ITEMS());
     }, []);
 
     return (
-        <nav className="  md:px-48 px-5 fixed top-0 w-full z-20  transition-all">
+        <nav className="bg-white px-5 fixed top-0 w-full z-20  transition-all">
             <div className="max-w-4xl m-auto  flex  items-center justify-between">
                 <div className="flex items-center">
-                    {scrolled ? (
+                    {/*{scrolled ? (*/}
+                    {/*    <Link href="/">*/}
+                    {/*        <img className="w-36 pt-2 mr-16 cursor-pointer" src="/images/svg/logo.svg" alt="" />*/}
+                    {/*    </Link>*/}
+                    {/*) : (*/}
                         <Link href="/">
                             <img className="w-36 pt-2 mr-16 cursor-pointer" src="/images/svg/logo.svg" alt="" />
                         </Link>
-                    ) : (
-                        <Link href="/">
-                            <img className="w-36 pt-2 mr-16 cursor-pointer" src="/images/svg/logo.svg" alt="" />
-                        </Link>
-                    )}
+                    {/*)}*/}
                 </div>
 
                 <ul className="flex gap-5 items-center space-x-3 ">
@@ -62,12 +62,14 @@ function NavBar() {
                         {/*<span className={`${router.pathname === "/orders" ? 'w-1/2' : 'w-0'}  h-[1px] ${scrolled ? 'bg-black' : 'bg-white'} absolute top-[26px] left-0 group-hover:w-1/2 transition-all`}></span>*/}
                     </li>
 
-                    <li className={`flex items-center  p-1  transition cursor-pointer`}>
-                        <img src="/images/svg/cart-icon.svg" alt="cart icon" className="mr-2" />
-                        <div>
-                            <h4 className="font-bold">Cart</h4>
-                            <p className="">{cartCount} items</p>
-                        </div>
+                    <li>
+                        <Link href='/checkout' className={`flex items-center  p-1  transition cursor-pointer`}>
+                            <img src="/images/svg/cart-icon.svg" alt="cart icon" className="mr-2" />
+                            <div>
+                                <h4 className="font-bold">Cart</h4>
+                                <p className="">{cartCount} items</p>
+                            </div>
+                        </Link>
                     </li>
                 </ul>
             </div>

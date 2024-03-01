@@ -9,7 +9,7 @@ import {PaystackButton} from "react-paystack";
 import {PaystackProps} from "react-paystack/dist/types";
 import {useDispatch, useSelector} from "react-redux";
 import {uuidv4} from "@firebase/util";
-
+import Input from "@/components/input";
 
 type referenceObj = {
     message: string;
@@ -65,9 +65,9 @@ const Page: NextPage = () => {
         // }
     };
     return (
-        <div className="max-w-3xl m-auto">
+        <div className="">
             <NavBar />
-            <div className="grid grid-cols-2 gap-4">
+            <div className="max-w-4xl mt-[150px] m-auto grid grid-cols-2 gap-4">
                 <Cart />
                 <Formik ref={ref} initialValues={initialValues} validationSchema={validationSchema} onSubmit={(values) => {
 
@@ -90,11 +90,41 @@ const Page: NextPage = () => {
 
 
                         return (
-                            <Form className="bg-gray-500">
-                                <div></div>
+                            <Form className="bg-gray-100 rounded-lg p-5 space-y-3">
+                                <h2 className='font-bold text-2xl '>Checkout</h2>
+                                <p className='text-gray-400 text-xs'>Complete your purchase by filling the information below</p>
+                                <div className='grid grid-cols-2 gap-4'>
+                                    <div>
+                                    <Input  name='firstname' placeholder='firstname' />
+                                    </div>
+                                    <div>
+                                    <Input name='lastname' placeholder='Lastname' />
+                                    </div>
+                                    <div className='col-span-2'>
+                                        <Input  name='phone' placeholder='Phone' />
+                                    </div>
+                                    <h3 className='text-lg'>Shipping address</h3>
+                                    <div className='col-span-2'>
+                                        <Input  name='address' placeholder='Address' />
+                                    </div>
+                                    <div className=''>
+                                        <Input  name='state' placeholder='State' />
+                                    </div>
+                                    <div className=''>
+                                        <Input  name='city' placeholder='City' />
+                                    </div>
+                                    <div className='col-span-2'>
+                                        <Input  name='coupon' placeholder='Coupon (optional)' />
+                                    </div>
+
+                                    <div>
+                                        <PaystackButton {...config} className='bg-primary text-white border-primary rounded ring-transparent focus:outline-none hover:ring-2 disabled:opacity-40 hover:ring-offset-1 hover:ring-primary hover:border-primary hover:text-white'  />
+                                    </div>
+
+                                </div>
 
 
-                                <PaystackButton {...config}  />
+
                             </Form>
                         );
                     }}
