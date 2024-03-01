@@ -1,35 +1,34 @@
 "use client";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "@/components/NavBar";
 import SectionItem from "@/components/products/SectionItem";
-import {useDispatch, useSelector} from "react-redux";
-import {useRouter} from "next/navigation";
-import {fetchProduct, fetchProducts} from "@/store/slices/itemsSlice";
-import {cartActions} from "@/store/slices/cartSlice";
-import {NextPage} from "next";
-import {RootState} from "@/store/store";
-
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
+import { fetchProduct, fetchProducts } from "@/store/slices/itemsSlice";
+import { cartActions } from "@/store/slices/cartSlice";
+import { NextPage } from "next";
+import { RootState } from "@/store/store";
 
 type ProductPage = {
-    params: { [key:string]: string }
-}
+    params: { [key: string]: string };
+};
 const Page: NextPage<ProductPage> = ({ params: { id } }) => {
     const router = useRouter();
     // const id = router.query.id;
     const dispatch = useDispatch();
 
     const [items, setItems] = useState([]);
-    const [singleProduct, setSingleProduct]:any = useState({});
-    const { itemsItems: products, product } = useSelector((state:RootState) => {
+    const [singleProduct, setSingleProduct]: any = useState({});
+    const { itemsItems: products, product } = useSelector((state: RootState) => {
         console.log("state", state);
         return state.items;
     });
-    const cartItems = useSelector((state:RootState) => {
+    const cartItems = useSelector((state: RootState) => {
         console.log("cart", state);
         return state.cart.cartItems;
     });
-    const cartItem = cartItems?.length && cartItems.find((c:any) => c.id == id);
-    const relatedProducts = products.filter((p:any) => p.id !== id);
+    const cartItem = cartItems?.length && cartItems.find((c: any) => c.id == id);
+    const relatedProducts = products.filter((p: any) => p.id !== id);
 
     useEffect(() => {
         dispatch(fetchProduct(id));

@@ -46,9 +46,9 @@ function NavBar() {
                     {/*        <img className="w-36 pt-2 mr-16 cursor-pointer" src="/images/svg/logo.svg" alt="" />*/}
                     {/*    </Link>*/}
                     {/*) : (*/}
-                        <Link href="/">
-                            <img className="w-36 pt-2 mr-16 cursor-pointer" src="/images/svg/logo.svg" alt="" />
-                        </Link>
+                    <Link href="/">
+                        <img className="w-36 pt-2 mr-16 cursor-pointer" src="/images/svg/logo.svg" alt="" />
+                    </Link>
                     {/*)}*/}
                 </div>
 
@@ -63,7 +63,7 @@ function NavBar() {
                     </li>
 
                     <li>
-                        <Link href='/checkout' className={`flex items-center  p-1  transition cursor-pointer`}>
+                        <Link href="/checkout" className={`flex items-center  p-1  transition cursor-pointer`}>
                             <img src="/images/svg/cart-icon.svg" alt="cart icon" className="mr-2" />
                             <div>
                                 <h4 className="font-bold">Cart</h4>

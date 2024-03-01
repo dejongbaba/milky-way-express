@@ -41,9 +41,7 @@ function CartItem({ item }) {
                         </div>
 
                         <label htmlFor="quantity" className="flex items-center justify-self">
-                            <button
-                                onClick={reduceQuantity}
-                                className=" focus:outline-none py-1 w-8 ml-2    ">
+                            <button onClick={reduceQuantity} className=" focus:outline-none py-1 w-8 ml-2    ">
                                 -
                             </button>
                             <input
@@ -53,9 +51,7 @@ function CartItem({ item }) {
                                 value={quantity}
                                 onBlur={editQuantity}
                             />
-                            <button
-                                onClick={increaseQuantity}
-                                className=" focus:outline-none py-1 w-8    ">
+                            <button onClick={increaseQuantity} className=" focus:outline-none py-1 w-8    ">
                                 +
                             </button>
                         </label>
@@ -69,7 +65,6 @@ function CartItem({ item }) {
                         {/*</p>*/}
                     </div>
                 </div>
-
             </div>
         </>
     );

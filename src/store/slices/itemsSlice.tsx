@@ -1,5 +1,5 @@
 "use client";
-import {createAsyncThunk, createSlice, Draft} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, Draft } from "@reduxjs/toolkit";
 import { collection, getDocs, doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from "@/config/firebase-config";
 
@@ -21,7 +21,7 @@ export const fetchProducts = createAsyncThunk("products/fetch", async () => {
     const data = await res.json();
     return data;
 });
-export const fetchProduct = createAsyncThunk("product/fetch", async (id:number) => {
+export const fetchProduct = createAsyncThunk("product/fetch", async (id: number) => {
     const res = await fetch(`https://fakestoreapi.com/products/${id}`);
     const data = await res.json();
     return data;
@@ -67,28 +67,28 @@ const itemsSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchProducts.pending, (state:any, action) => {
+            .addCase(fetchProducts.pending, (state: any, action) => {
                 state.status = STATUSES.LOADING;
             })
-            .addCase(fetchProducts.fulfilled, (state:any, action) => {
+            .addCase(fetchProducts.fulfilled, (state: any, action) => {
                 state.itemsItems = action.payload;
                 state.status = STATUSES.IDLE;
             })
-            .addCase(fetchProduct.fulfilled, (state:any, action) => {
+            .addCase(fetchProduct.fulfilled, (state: any, action) => {
                 state.product = action.payload;
                 state.status = STATUSES.IDLE;
             })
-            .addCase(fetchProducts.rejected, (state:any, action) => {
+            .addCase(fetchProducts.rejected, (state: any, action) => {
                 state.status = STATUSES.ERROR;
             })
-            .addCase(fetchCategories.fulfilled, (state:any, action) => {
+            .addCase(fetchCategories.fulfilled, (state: any, action) => {
                 state.categories = action.payload;
                 state.status = STATUSES.IDLE;
             })
-            .addCase(fetchCategories.pending, (state:any, action) => {
+            .addCase(fetchCategories.pending, (state: any, action) => {
                 state.status = STATUSES.LOADING;
             })
-            .addCase(fetchCategories.rejected, (state:any, action) => {
+            .addCase(fetchCategories.rejected, (state: any, action) => {
                 state.status = STATUSES.ERROR;
             });
     },

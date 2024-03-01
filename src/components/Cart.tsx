@@ -20,18 +20,16 @@ function Cart() {
         }
     }, [cartItems]);
 
-    console.log('cart',cartItems)
+    console.log("cart", cartItems);
     return (
         <>
             <div className=" w-full  text-black bg-white  min-h-screen px-5 ">
                 {/*<button onClick={setShow} className={`w-16 h-16  p-3 transition hover:bg-[#7c7c7c2c]`}>*/}
                 {/*    <img className="w-20" src="/icons/remove-icon-black.svg" alt="" />*/}
                 {/*</button>*/}
-                <div className='border-b border-gray-300 pb-4'>
+                <div className="border-b border-gray-300 pb-4">
                     <Link href="/">
-                        <button className="text-sm">
-                            &lt;    Continue shopping
-                        </button>
+                        <button className="text-sm">&lt; Continue shopping</button>
                     </Link>
                 </div>
 
@@ -44,8 +42,7 @@ function Cart() {
                             })
                         ) : (
                             <div className="text-gray-500  flex flex-col gap-10 justify-center items-center text-lg text-center">
-                                You still haven&apos;t added anything to the cart yet :&apos;({" "}
-                                {/*<Link href="/">*/}
+                                You still haven&apos;t added anything to the cart yet :&apos;( {/*<Link href="/">*/}
                                 {/*    <button className="px-10  rounded-lg transition  bg-primary text-white  py-5 text-sm">*/}
                                 {/*        Continue shopping*/}
                                 {/*    </button>*/}
@@ -70,7 +67,6 @@ function Cart() {
                         ""
                     )}
                 </div>
-
             </div>
         </>
     );

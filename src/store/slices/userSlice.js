@@ -50,9 +50,10 @@ export const signInWithGoogle = createAsyncThunk("user/sign-in-google", async ()
     const provider = new GoogleAuthProvider();
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
-    const q = query(collection(db, "users"), where("uid", "==", user.uid));
-    const userInfos = await getDocs(q);
-    return userInfos;
+    // const q = query(collection(db, "users"), where("uid", "==", user.uid));
+    // const userInfos = await getDocs(q);
+    console.log('user in thunk',user)
+    return user;
     // userInfos.forEach((doc) => {
     //     dispatch(userSlice.actions.SIGN_IN({ ...doc.data(), docId: doc.id }));
     //     const localData = JSON.stringify(user);
@@ -124,11 +125,13 @@ const userSlice = createSlice({
                 const userInfos = action.payload;
                 state.user = userInfos;
                 state.status = STATUSES.IDLE;
-                userInfos.forEach((doc) => {
-                    state.userInfo = { ...doc.data(), docId: doc.id };
-                    const localData = JSON.stringify(userInfos);
-                    localStorage.setItem("account", localData);
-                });
+                console.log('state',state,userInfos)
+                // state.userInfo = { ...doc.data(), docId: doc.id };
+                const localData = JSON.stringify(userInfos);
+                localStorage.setItem("account", localData);
+                // userInfos.forEach((doc) => {
+                //
+                // });
             })
             .addCase(signInWithGoogle.rejected, (state, action) => {
                 state.status = STATUSES.ERROR;

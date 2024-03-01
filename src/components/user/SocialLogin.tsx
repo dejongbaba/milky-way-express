@@ -3,7 +3,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "@/config/firebase-config";
 import { addDoc, collection } from "firebase/firestore";
 import { useSelector } from "react-redux";
-import { signIn } from "@/store/slices/userSlice";
+import {signIn, signInWithGoogle, userActions} from "@/store/slices/userSlice";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 
@@ -42,7 +42,7 @@ function SocialLogin({ setLogin, setSignup }) {
                                 email: user.email,
                                 wishlist: [],
                             });
-                            dispatch(signIn(email, password));
+                            dispatch(signIn({ email, password }));
 
                             // ...
                         })
@@ -64,33 +64,37 @@ function SocialLogin({ setLogin, setSignup }) {
     }
 
     return (
-        <div className="w-full text-black flex justify-center items-center ">
-            <div className="px-5 flex  w-full justify-center items-center">
-                <div className="flex-1">
-                    <h1 className="text-3xl font-bold mb-2">Login </h1>
+        <div className="min-h-screen w-full text-black flex justify-center items-start">
+            {/*<div className="px-5 flex  w-full justify-center items-center">*/}
+            <div className="flex flex-1 flex-col space-y-4 w-full flex flex-col md:mt-20 mt-10 md:gap-10 gap-5 md:w-[470px] ">
+                <div>
+                    <h1 className="text-4xl font-bold mb-2">Login </h1>
                     <p className="text-gray-500 mb-4">Login to complete your order </p>
-                    <div className="space-y-4">
-                        <button className="flex items-center font-bold text-white bg-primary px-8 py-3 rounded-full">
-                            <img src="/images/svg/google.svg" className="mr-2" alt="google" />
-                            <span>Continue with Google</span>
-                        </button>
-                        <button className="flex items-center font-bold text-white bg-primary px-8 py-3 rounded-full">
-                            <img src="/images/svg/facebook.svg" className="mr-2" alt="google" />
-                            <span>Continue with Facebook</span>
-                        </button>
-                        <p className="text-gray-500">
-                            Or use your password to{" "}
-                            <span className="font-bold underline text-gray-700" onClick={() => setSignup()}>
-                                sign up
-                            </span>{" "}
-                            or{" "}
-                            <span className="font-bold underline text-gray-700 " onClick={() => setLogin()}>
-                                login
-                            </span>
-                        </p>
-                    </div>
+                </div>
+                <div className="space-y-4 md:mt-20 mt-10 md:gap-10 gap-5 md:w-[470px]">
+                    <button type='button' onClick={()=>{
+                        dispatch(signInWithGoogle())
+                    }} className="flex items-center font-bold text-white bg-primary px-8 py-3 rounded-full">
+                        <img src="/images/svg/google.svg" className="mr-2" alt="google" />
+                        <span>Continue with Google</span>
+                    </button>
+                    <button className="flex items-center font-bold text-white bg-primary px-8 py-3 rounded-full">
+                        <img src="/images/svg/facebook.svg" className="mr-2" alt="google" />
+                        <span>Continue with Facebook</span>
+                    </button>
+                    <p className="text-gray-500 mt-6">
+                        Or use your password to{" "}
+                        <span className="font-bold underline text-gray-700 cursor-pointer" onClick={() => setSignup()}>
+                            sign up
+                        </span>{" "}
+                        or{" "}
+                        <span className="font-bold underline text-gray-700  cursor-pointer" onClick={() => setLogin()}>
+                            login
+                        </span>
+                    </p>
                 </div>
             </div>
+            {/*</div>*/}
         </div>
     );
 }
