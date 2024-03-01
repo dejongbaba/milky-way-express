@@ -58,7 +58,7 @@ function Cart() {
                             <Link href={{ pathname: userConnected ? "/checkout" : "/login" }}>
                                 <button
                                     // onClick={setShow}
-                                    className="px-6 py-4 bg-[#7D916C] text-white md:text-[18px] text-[16px]">
+                                    className="px-6 py-4 bg-primary rounded-lg text-white md:text-[18px] text-[16px]">
                                     Check out
                                 </button>
                             </Link>
