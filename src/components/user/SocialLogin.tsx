@@ -3,7 +3,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "@/config/firebase-config";
 import { addDoc, collection } from "firebase/firestore";
 import { useSelector } from "react-redux";
-import {signIn, signInWithGoogle, userActions} from "@/store/slices/userSlice";
+import { signIn, signInWithGoogle, userActions } from "@/store/slices/userSlice";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 
@@ -72,9 +72,12 @@ function SocialLogin({ setLogin, setSignup }) {
                     <p className="text-gray-500 mb-4">Login to complete your order </p>
                 </div>
                 <div className="space-y-4 md:mt-20 mt-10 md:gap-10 gap-5 md:w-[470px]">
-                    <button type='button' onClick={()=>{
-                        dispatch(signInWithGoogle())
-                    }} className="flex items-center font-bold text-white bg-primary px-8 py-3 rounded-full">
+                    <button
+                        type="button"
+                        onClick={() => {
+                            dispatch(signInWithGoogle());
+                        }}
+                        className="flex items-center font-bold text-white bg-primary px-8 py-3 rounded-full">
                         <img src="/images/svg/google.svg" className="mr-2" alt="google" />
                         <span>Continue with Google</span>
                     </button>

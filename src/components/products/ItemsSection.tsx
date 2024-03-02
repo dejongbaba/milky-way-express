@@ -1,7 +1,7 @@
 import SectionItem from "@/components/products/SectionItem";
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useState} from "react";
-import {fetchProducts} from "@/store/slices/itemsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { fetchProducts } from "@/store/slices/itemsSlice";
 
 function ItemsSection({ filterss, search }) {
     const dispatch = useDispatch();

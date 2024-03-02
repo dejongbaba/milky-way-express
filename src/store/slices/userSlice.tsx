@@ -52,7 +52,7 @@ export const signInWithGoogle = createAsyncThunk("user/sign-in-google", async ()
     const user = result.user;
     // const q = query(collection(db, "users"), where("uid", "==", user.uid));
     // const userInfos = await getDocs(q);
-    console.log('user in thunk',user)
+    console.log("user in thunk", user);
     return user;
     // userInfos.forEach((doc) => {
     //     dispatch(userSlice.actions.SIGN_IN({ ...doc.data(), docId: doc.id }));
@@ -88,7 +88,7 @@ const userSlice = createSlice({
     reducers: {
         GET_USER(state) {
             if (localStorage.getItem("account")) {
-                state.user = JSON.parse(localStorage.getItem("account"))
+                state.user = JSON.parse(localStorage.getItem("account"));
             }
         },
         SIGN_IN(state, { payload }) {
@@ -129,7 +129,7 @@ const userSlice = createSlice({
                 const userInfos = action.payload;
                 state.user = userInfos;
                 state.status = STATUSES.IDLE;
-                console.log('state',state,userInfos)
+                console.log("state", state, userInfos);
                 // state.userInfo = { ...doc.data(), docId: doc.id };
                 const localData = JSON.stringify(userInfos);
                 localStorage.setItem("account", localData);

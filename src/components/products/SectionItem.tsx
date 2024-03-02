@@ -34,11 +34,11 @@ function SectionItem({ title, image, category, description, price, id }) {
 
     return (
         <Link href={`/product/${id}`}>
-            <div className=" space-y-4 border border-gray-200 rounded-lg  p-3 transition  text-black flex flex-col bg-white cursor-pointer group">
-                <img src={image} className="w-[80%]" alt={title} />
+            <div className=" space-y-4 border border-gray-200 rounded-lg h-[350px]  p-3 transition  text-black flex flex-col bg-white cursor-pointer group">
+                <img src={image} className="w-[80%] h-[150px] object-cover" alt={title} />
                 <div className="">
                     <div>
-                        <h1 className="text-lg   group-hover:text-primary transition">{title}</h1>
+                        <h1 className="text-sm font-semibold  group-hover:text-primary transition">{title}</h1>
                     </div>
                     <p className=" text-sm text-gray-400 truncate">{description}</p>
                 </div>

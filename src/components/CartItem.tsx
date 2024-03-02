@@ -31,13 +31,13 @@ function CartItem({ item }) {
 
     return (
         <>
-            <div className="flex w-full py-2 px-2 hover:bg-secondary rounded-md">
+            <div className="flex w-full py-2 px-2 hover:bg-secondary rounded-md shadow-lg">
                 <div className="flex flex-1 items-center">
                     <img src={item.image} className="w-24" alt="" />
                     <div className="pl-2 flex md:justify-around justify-start">
-                        <div>
-                            <h1 className="text-xs">{item.title}</h1>
-                            <p className="text-xs">{item.price} NGN</p>
+                        <div className="space-y-2">
+                            <h1 className="text-xs ">{item.title}</h1>
+                            <p className="text-xs font-semibold">{item.price} NGN</p>
                         </div>
 
                         <label htmlFor="quantity" className="flex items-center justify-self">
@@ -46,7 +46,9 @@ function CartItem({ item }) {
                             </button>
                             <input
                                 max="99"
-                                type="number"
+                                // type="number"
+                                type="text"
+                                inputMode="numeric"
                                 className="border border-gray-300 rounded-lg focus:outline-none py-1 px-2 w-10 text-center"
                                 value={quantity}
                                 onBlur={editQuantity}

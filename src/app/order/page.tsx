@@ -1,61 +1,70 @@
 "use client";
 import React from "react";
 import NavBar from "@/components/NavBar";
-import { PaystackButton } from "react-paystack";
-import { PaystackProps } from "react-paystack/dist/types";
+import { useSelector } from "react-redux";
 
 const OrderPage = () => {
+    const user = useSelector((state) => state.user.user);
+    //Get the orders by dispatching a get to orders on firebase
+
     return (
         <div className="">
             <NavBar />
-            <div className=" max-w-3xl m-auto mt-10 grid grid-cols-3 gap-4">
-                <div className="col-span-1">
-                    <h2>My orders</h2>
-                    <p>Input your email to view your order history</p>
+            <div className="max-w-4xl m-auto mt-[150px] grid grid-cols-5 gap-4">
+                <div className="col-span-2 space-y-6">
                     <div>
-                        <div className="items-center rounded-lg flex border border-primary-200 p-3">
-                            <div className={` mr-2 w-[150px] h-[150px] bg-[url(/images/svg/logo.svg)] bg-cover `} />
-                            <div>
-                                <h3>Order #201</h3>
-                                <p>Milky Lactation Cookies, Milky Enrich Shakes, Milky Lactation Tea</p>
+                        <h2 className="text-xl font-semibold mb-2">My orders</h2>
+                        <p className="text-gray-400 text-sm">Input your email to view your order history</p>
+                    </div>
+
+                    <div>
+                        <div className="items-center rounded-lg transition hover:border hover:border-secondary flex items-center border border-primary-200 p-3">
+                            <div className="mr-2 w-[120px] ">
+                                <img src="/images/svg/logo.svg" alt="" />
                             </div>
-                            <img className="w-6" src="/images/svg/right-arrow.svg" />
+                            <div>
+                                <h3 className="font-semibold ">Order #201</h3>
+                                <p className="text-gray-400 text-xs ellipses">
+                                    Milky Lactation Cookies, Milky Enrich Shakes, Milky Lactation Tea
+                                </p>
+                            </div>
+                            <img className="w-5" src="/images/svg/right-arrow.svg" />
                         </div>
                     </div>
                 </div>
-                <div className="col-span-2">
-                    <div className="bg-gray-200 p-5 rounded-lg">
-                        <div className="text-center">
+                <div className="col-span-3">
+                    <div className="bg-gray-100 p-10 rounded-lg space-y-4">
+                        <div className="flex justify-center">
                             <img src="/images/svg/logo.svg" alt="logo" />
                         </div>
                         <div className="text-center">
-                            <h2>Order #201</h2>
+                            <h2 className="font-semibold text-2xl mb-3">Order #201</h2>
                             <div className="flex justify-around">
                                 <div>
-                                    <span>Status:</span> <span className="text-gray-500">Paid </span>
+                                    <span>Status:</span> <span className="text-gray-400">Paid </span>
                                 </div>
                                 <div>
-                                    <span>Date:</span> <span className="text-gray-500">1-01-2025 </span>
+                                    <span>Date:</span> <span className="text-gray-400">1-01-2025 </span>
                                 </div>
                             </div>
                         </div>
-                        <div className="bg-primary p-3 text-white font-bold text-lg">Order summary</div>
-                        <div>
-                            <div className="flex">
+                        <div className="bg-primary p-3 text-white rounded-lg font-bold text-lg">Order summary</div>
+                        <div className="space-y-4">
+                            <div className="flex items-center">
                                 <div
                                     style={{ backgroundImage: `url(/images/svg/logo.svg)` }}
                                     className="w-24 h-24 bg-cover"></div>
                                 <div className="flex-1 flex ">Milky Enrich Shakes</div>
                                 <div className="">NGN 3500</div>
                             </div>
-                            <div className="flex">
+                            <div className="flex items-center">
                                 <div
                                     style={{ backgroundImage: `url(/images/svg/logo.svg)` }}
                                     className="w-24 h-24 bg-cover"></div>
                                 <div className="flex-1 flex ">Milky Enrich Shakes</div>
                                 <div className="">NGN 3500</div>
                             </div>
-                            <div className="flex">
+                            <div className="flex items-center">
                                 <div
                                     style={{ backgroundImage: `url(/images/svg/logo.svg)` }}
                                     className="w-24 h-24 bg-cover"></div>
@@ -81,27 +90,27 @@ const OrderPage = () => {
                                 <p className="font-bold ">NGN 14,000</p>
                             </div>
                         </div>
-                        <div className="bg-primary text-white p-3 font-bold">Account summary</div>
+                        <div className="bg-primary text-white p-3 font-bold rounded-lg">Account summary</div>
                         <div className="space-y-4">
                             <div className="flex justify-between">
                                 <p>Firstname</p>
-                                <p>John</p>
+                                <p className="text-gray-400">{user?.name?.split(" ")?.[0]}</p>
                             </div>{" "}
                             <div className="flex justify-between">
                                 <p>Lastname</p>
-                                <p>Stone</p>
+                                <p className="text-gray-400">{user?.name?.split(" ")?.[1]}</p>
                             </div>
                             <div className="flex justify-between">
                                 <p>Email</p>
-                                <p>ebony@gmail.com</p>
+                                <p className="tex-gray-400">{user?.email}</p>
                             </div>
                             <div className="flex justify-between mt-5">
-                                <p className="font-bold ">Phone</p>
-                                <p className="font-bold ">NGN 14,000</p>
+                                <p className=" ">Phone</p>
+                                <p className="tex-gray-400 ">{user?.phone}</p>
                             </div>{" "}
                             <div className="flex justify-between mt-5">
-                                <p className="font-bold ">Address</p>
-                                <p className="font-bold ">7 Sdekunle Ajose Street Lekki Lagos Nigeria</p>
+                                <p className=" ">Address</p>
+                                <p className="tex-gray-400 ">{user?.address}</p>
                             </div>
                         </div>
                     </div>

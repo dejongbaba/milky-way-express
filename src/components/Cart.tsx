@@ -5,7 +5,7 @@ import { cartActions } from "@/store/slices/cartSlice";
 import Link from "next/link";
 
 function Cart() {
-    const [total, setTotal] = useState(0);
+    // const [total, setTotal] = useState(0);
     const dispatch = useDispatch();
     const userConnected = useSelector((state) => state.user.connected);
     const cartItems = useSelector((state) => state.cart.cartItems);
@@ -13,14 +13,14 @@ function Cart() {
         dispatch(cartActions.GET_CART_ITEMS());
     }, []);
 
-    useEffect(() => {
-        if (cartItems[0]) {
-            const eachTotal = cartItems.map((iteme) => parseInt(iteme.quantity) * parseFloat(iteme.price));
-            setTotal(eachTotal.reduce((a, b) => a + b));
-        }
-    }, [cartItems]);
+    // useEffect(() => {
+    //     if (cartItems[0]) {
+    //         const eachTotal = cartItems.map((item) => parseInt(item.quantity) * parseFloat(item.price));
+    //         setTotal(eachTotal.reduce((a, b) => a + b));
+    //     }
+    // }, [cartItems]);
 
-    console.log("cart", cartItems);
+    // console.log("cart", cartItems);
     return (
         <>
             <div className=" w-full  text-black bg-white  min-h-screen px-5 ">
@@ -35,7 +35,7 @@ function Cart() {
 
                 <div className="pt-5">
                     <div
-                        className={`text-black flex flex-col gap-5 w-full mt-8 ${cartItems && cartItems.length > 3 && "overflow-y-scroll"}  h-[65vh]`}>
+                        className={`text-black flex flex-col gap-5 w-full mt-8 space-y-4 ${cartItems && cartItems.length > 3 && "overflow-y-scroll"}  h-[65vh]`}>
                         {cartItems.length ? (
                             cartItems.map((item) => {
                                 return <CartItem item={item} key={item.id} />;
@@ -50,22 +50,6 @@ function Cart() {
                             </div>
                         )}
                     </div>
-                    {cartItems.length ? (
-                        <div className="mt-3 flex justify-between items-center p-3 rounded-md bg-gray-50 ">
-                            <Link href={{ pathname: userConnected ? "/checkout" : "/login" }}>
-                                <button
-                                    // onClick={setShow}
-                                    className="px-6 py-4 bg-primary rounded-lg text-white md:text-[18px] text-[16px]">
-                                    Check out
-                                </button>
-                            </Link>
-                            <p className="text-black font-semibold md:text-[20px] text-[17px]">
-                                TOTAL : {total.toFixed(2)} NGN
-                            </p>
-                        </div>
-                    ) : (
-                        ""
-                    )}
                 </div>
             </div>
         </>
