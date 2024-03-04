@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "@/config/firebase-config";
 import { addDoc, collection } from "firebase/firestore";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "@/store/slices/userSlice";
-import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -13,26 +12,18 @@ import Input from "@/components/input";
 function SignUp({ setSocialLogin }) {
     const dispatch = useDispatch();
     const router = useRouter();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [PError, setPError] = useState(false);
-    const [username, setUsername] = useState("");
-    const [EError, setEError] = useState(false);
-    const [UError, setUError] = useState(false);
     const initialValues = {
-        firstName: "",
-        lastName: "",
+        name: "",
         phone: "",
-        address: "",
-        country: "",
+        email: "",
+        password: "",
     };
 
     const validationSchema = Yup.object().shape({
-        firstName: Yup.string().required(""),
-        lastName: Yup.string().required(""),
+        name: Yup.string().required(""),
         phone: Yup.string().required(""),
-        address: Yup.string().required(""),
-        country: Yup.string().required(""),
+        email: Yup.string().required(""),
+        password: Yup.string().required(""),
     });
 
     const userConnected = useSelector((state) => state.user.connected);
@@ -43,44 +34,29 @@ function SignUp({ setSocialLogin }) {
         }
     }, [userConnected]);
     function createAccount(values) {
-        const { username, email } = values;
+        const { name, email, password, phone } = values;
         // e.preventDefault();
-        if (username != "") {
-            setUError(false);
-            if (email != "" && email.includes(".")) {
-                setEError(false);
-                if (password != "" && password.length >= 6) {
-                    createUserWithEmailAndPassword(auth, email, password)
-                        .then(async (userCredential) => {
-                            // Signed in
-                            const user = userCredential.user;
 
-                            const userCol = collection(db, "users");
-                            await addDoc(userCol, {
-                                uid: user.uid,
-                                username: username,
-                                email: user.email,
-                                wishlist: [],
-                            });
-                            dispatch(signIn(email, password));
+        createUserWithEmailAndPassword(auth, email, password)
+            .then(async (userCredential) => {
+                // Signed in
+                const user = userCredential.user;
 
-                            // ...
-                        })
-                        .catch((error) => {
-                            const errorCode = error.code;
-                            const errorMessage = error.message;
-                            alert(errorMessage);
-                            // ..
-                        });
-                } else {
-                    setPError(true);
-                }
-            } else {
-                setEError(true);
-            }
-        } else {
-            setUError(true);
-        }
+                const userCol = collection(db, "users");
+                await addDoc(userCol, {
+                    uid: user.uid,
+                    email: user.email,
+                    password,
+                    phone,
+                    name,
+                });
+                dispatch(signIn({ email, password }));
+
+                // ...
+            })
+            .catch((error) => {
+                // ..
+            });
     }
 
     return (
@@ -104,67 +80,18 @@ function SignUp({ setSocialLogin }) {
                                 <Form>
                                     <div className="w-full flex flex-col md:text-xl md:mt-20 mt-10 gap-5 md:w-[470px]">
                                         <div className="relative">
-                                            <Input name="email" />
-                                            {/*<input*/}
-                                            {/*    placeholder="Email"*/}
-                                            {/*    type="email"*/}
-                                            {/*    name="email"*/}
-                                            {/*    id="email"*/}
-                                            {/*    className={`border border-1 border-gray-400 rounded-xl focus:bg-gray-200 hover:bg-gray-200 pl-12 py-3 ${UError && "border-[0.7px] border-red-500"} outline-none  w-full`}*/}
-                                            {/*    onChange={(e) => setUsername(e.target.value)}*/}
-                                            {/*/>*/}
-                                            {/*{UError && (*/}
-                                            {/*    <p className="text-red-500">*/}
-                                            {/*        You can&apos;t leave the username empty !*/}
-                                            {/*    </p>*/}
-                                            {/*)}*/}
-                                            {/*<img*/}
-                                            {/*    className="w-6 absolute top-10 left-3"*/}
-                                            {/*    src="/icons/user-icon-black.svg"*/}
-                                            {/*    alt=""*/}
-                                            {/*/>*/}
+                                            <Input name="name" />
                                         </div>
                                         <div className="relative">
-                                            <Input name="phone" placeholder="Phone" />
-                                            {/*<input*/}
-                                            {/*    placeholder="enter your email"*/}
-                                            {/*    type="email"*/}
-                                            {/*    name="email"*/}
-                                            {/*    id="email"*/}
-                                            {/*    className={`border border-1 border-gray-400 rounded-xl focus:bg-gray-200 hover:bg-gray-200 pl-12 py-3 outline-none  w-full ${EError && "border-[0.7px] border-red-500"}`}*/}
-                                            {/*    onChange={(e) => setEmail(e.target.value)}*/}
-                                            {/*/>*/}
-                                            {/*{EError && <p className="text-red-500">this email is invalid !</p>}*/}
+                                            <Input name="email" />
+                                        </div>
 
-                                            {/*<img*/}
-                                            {/*    className="w-6 absolute top-10 left-3"*/}
-                                            {/*    src="/icons/mail-icon-black.svg"*/}
-                                            {/*    alt=""*/}
-                                            {/*/>*/}
+                                        <div className="relative">
+                                            <Input name="phone" placeholder="Phone" />
                                         </div>
                                         <div className="relative">
                                             <Input type="password" name="password" placeholder="Password" />
-                                            {/*<input*/}
-                                            {/*    placeholder="enter your password"*/}
-                                            {/*    type="password"*/}
-                                            {/*    name="pass"*/}
-                                            {/*    id="pass"*/}
-                                            {/*    className={`border border-1 border-gray-400 rounded-xl focus:bg-gray-200 hover:bg-gray-200 pl-12 py-3 outline-none w-full ${PError && "border-[0.7px] border-red-500"}`}*/}
-                                            {/*    onChange={(e) => setPassword(e.target.value)}*/}
-                                            {/*/>*/}
-                                            {/*{PError && (*/}
-                                            {/*    <p className="text-red-500">*/}
-                                            {/*        Password must contain at least 6 characters !*/}
-                                            {/*    </p>*/}
-                                            {/*)}*/}
-
-                                            {/*<img*/}
-                                            {/*    className="w-6 absolute top-10 left-3"*/}
-                                            {/*    src="/icons/lock-icon-black.svg"*/}
-                                            {/*    alt=""*/}
-                                            {/*/>*/}
                                         </div>
-
                                         <button
                                             // onClick={createAccount}
                                             type="submit"

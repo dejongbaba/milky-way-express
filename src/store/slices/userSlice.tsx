@@ -1,15 +1,15 @@
 "use client";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
-    signInWithEmailAndPassword,
-    signOut,
-    GoogleAuthProvider,
-    signInWithPopup,
     createUserWithEmailAndPassword,
+    GoogleAuthProvider,
+    signInWithEmailAndPassword,
+    signInWithPopup,
+    signOut,
 } from "firebase/auth";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { auth, db } from "@/config/firebase-config";
-import { fetchProducts, STATUSES } from "@/store/slices/itemsSlice";
+import { STATUSES } from "@/store/slices/itemsSlice";
 
 export const signIn = createAsyncThunk("user/signin", async ({ email, password }) => {
     const res = await signInWithEmailAndPassword(auth, email, password);
@@ -17,12 +17,6 @@ export const signIn = createAsyncThunk("user/signin", async ({ email, password }
 
     const q = query(collection(db, "users"), where("uid", "==", user.uid));
     const userInfos = await getDocs(q);
-    // userInfos.forEach((doc) => {
-    //     dispatch(userSlice.actions.SIGN_IN({ ...doc.data(), docId: doc.id }));
-    //
-    //     // const localData = JSON.stringify({ email: email, password: password });
-    //     // localStorage.setItem("account", localData);
-    // });
     return userInfos;
 });
 export const signUp = createAsyncThunk("user/signup", async ({ email, password }) => {
@@ -30,40 +24,14 @@ export const signUp = createAsyncThunk("user/signup", async ({ email, password }
 
     return res;
 });
-// export function signIn(email, password) {
-//     return async (dispatch) => {
-//
-//             .then(async (userCredential) => {
-//                 // Signed in
-//
-//             })
-//             .catch((error) => {
-//                 const errorCode = error.code;
-//                 const errorMessage = error.message;
-//                 dispatch(userSlice.actions.SET_ERROR(errorCode));
-//             });
-//     };
-// }
 
 export const signInWithGoogle = createAsyncThunk("user/sign-in-google", async () => {
-    // try {
-    const provider = new GoogleAuthProvider();
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
-    // const q = query(collection(db, "users"), where("uid", "==", user.uid));
-    // const userInfos = await getDocs(q);
-    console.log("user in thunk", user);
-    return user;
-    // userInfos.forEach((doc) => {
-    //     dispatch(userSlice.actions.SIGN_IN({ ...doc.data(), docId: doc.id }));
-    //     const localData = JSON.stringify(user);
-    //     localStorage.setItem("account", localData);
-    // });
-    // }catch (error) {
-    //     const errorCode = error.code;
-    //     const errorMessage = error.message;
-    //     dispatch(userSlice.actions.SET_ERROR(errorCode));
-    // }
+    try {
+        const provider = new GoogleAuthProvider();
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        return user;
+    } catch (error) {}
 });
 
 export const signOutGoogle = createAsyncThunk("user/sign-out", async () => {

@@ -1,13 +1,18 @@
-import { Metadata } from "next";
+"use client";
 import NavBar from "@/components/NavBar";
 import Shop from "@/components/products/Shop";
-
-export const metadata: Metadata = {
-    title: "Milky way express",
-    description: "an ecommerce application to buy milk drinks",
-};
+import { useSelector } from "react-redux";
+import { STATUSES } from "@/store/slices/itemsSlice";
+import Loader from "@/components/Loader";
 
 export default function Home() {
+    // let { status } = useSelector((state) => {
+    //     return state.items;
+    // });
+    //
+    // if (status == STATUSES.LOADING) {
+    //     return <Loader />;
+    // }
     return (
         <main className=" min-h-screen">
             <NavBar />

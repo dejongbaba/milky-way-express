@@ -1,7 +1,8 @@
 import SectionItem from "@/components/products/SectionItem";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { fetchProducts } from "@/store/slices/itemsSlice";
+import { fetchProducts, STATUSES } from "@/store/slices/itemsSlice";
+import Loader from "@/components/Loader";
 
 function ItemsSection({ filterss, search }) {
     const dispatch = useDispatch();
@@ -32,51 +33,15 @@ function ItemsSection({ filterss, search }) {
     }, [search]);
 
     useEffect(() => {
-        let itemsTofilter = storeItems;
+        let itemsToFilter = storeItems;
         if (filterss) {
             if (filterss.search) {
-                itemsTofilter = itemsTofilter.filter((item) => {
+                itemsToFilter = itemsToFilter.filter((item) => {
                     return item.title.toLowerCase().includes(filterss.search.toLowerCase());
                 });
             }
 
-            if (filterss.min) {
-                itemsTofilter = itemsTofilter.filter((item) => {
-                    return item.price >= parseFloat(filterss.min);
-                });
-            }
-            if (filterss.max) {
-                itemsTofilter = itemsTofilter.filter((item) => {
-                    return item.price <= parseFloat(filterss.max);
-                });
-            }
-            if (filterss.pl) {
-                itemsTofilter = itemsTofilter.filter((item) => {
-                    return item.type == "Peace lily";
-                });
-            }
-            if (filterss.scc) {
-                itemsTofilter = itemsTofilter.filter((item) => {
-                    return item.type == "Succulent";
-                });
-            }
-            if (filterss.csp) {
-                itemsTofilter = itemsTofilter.filter((item) => {
-                    return item.type == "Curly Spider Plant";
-                });
-            }
-            if (filterss.sp) {
-                itemsTofilter = itemsTofilter.filter((item) => {
-                    return item.type == "Snake plant";
-                });
-            }
-            if (filterss.rce) {
-                itemsTofilter = itemsTofilter.filter((item) => {
-                    return item.type == "Red Chinese evergreen";
-                });
-            }
-
-            setItemsToshow(itemsTofilter);
+            setItemsToshow(itemsToFilter);
         }
     }, [filterss]);
 
